@@ -20,16 +20,27 @@
   </div>
 
   <script>
-    function loadPage(page) {
-      fetch(page)
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById('content').innerHTML = html;
-        });
+  function loadPage(page) {
+    fetch(page)
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('content').innerHTML = html;
+      });
+  }
+
+  window.addEventListener("load", () => loadPage('home.html'));
+
+  // Sticky scroll effect
+  const header = document.getElementById('main-header');
+  const spacer = document.getElementById('spacer');
+
+  const stickyThreshold = header.offsetTop + header.offsetHeight / 2;
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY >= stickyThreshold) {
+      header.classList.add('sticky');
+    } else {
+      header.classList.remove('sticky');
     }
-
-    window.addEventListener("load", () => loadPage('home.html'));
-
-    // Sticky scroll effect
-   const header = document.getElementById('main-header');
-    </script>
+  });
+</script>

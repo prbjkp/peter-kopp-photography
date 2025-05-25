@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sticky Menu Demo</title>
+  <title>Smooth Sticky Menu</title>
   <style>
     body {
       margin: 0;
@@ -12,8 +12,13 @@
     header {
       display: flex;
       justify-content: center;
-      padding: 200px 0 20px; /* Starts lower on page */
-      transition: all 0.3s ease;
+      padding: 200px 0 30px;
+      background-color: transparent;
+      position: relative;
+      transition:
+        padding 0.4s ease,
+        background-color 0.4s ease,
+        box-shadow 0.4s ease;
     }
 
     header.sticky {
@@ -21,25 +26,33 @@
       top: 0;
       left: 0;
       right: 0;
-      padding: 10px 0;
+      padding: 10px 0 10px;
       background-color: white;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
       z-index: 1000;
     }
 
     nav a {
-      margin: 0 15px;
+      margin: 0 20px;
       text-decoration: none;
       color: #333;
       font-weight: bold;
+      font-size: 18px;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #007acc;
     }
 
     #content {
-      padding: 40px;
+      padding: 60px 40px;
+      max-width: 800px;
+      margin: auto;
     }
 
     .spacer {
-      height: 1500px; /* Creates scroll space */
+      height: 1500px;
     }
   </style>
 </head>
@@ -54,14 +67,14 @@
 
   <div id="content">
     <h1>Welcome</h1>
-    <p>This is your content area. Scroll down to see the sticky nav.</p>
+    <p>Scroll down and watch the header stick to the top with a smooth transition.</p>
   </div>
 
   <div class="spacer"></div>
 
   <script>
     const header = document.getElementById('main-header');
-    const stickyPoint = header.offsetTop + 100; // Start sticking after scrolling past this
+    const stickyPoint = header.offsetTop + 100;
 
     window.addEventListener('scroll', () => {
       if (window.scrollY >= stickyPoint) {

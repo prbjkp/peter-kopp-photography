@@ -2,89 +2,77 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Smooth Sticky Nav</title>
+
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #152A17; /* Dark forest green background */
-      color: #F3F4ED; /* Soft cream text */
-    }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #152A17; /* Dark forest green background */
+    color: #F3F4ED; /* Soft cream text */
+  }
 
-    /* Hero section to push nav lower initially */
-    .hero {
-      height: 300px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: transparent;
-    }
+  header {
+    display: flex;
+    justify-content: center;
+    padding: 200px 0 30px;
+    background-color: transparent;
+    position: relative;
+    transition:
+      padding 0.4s ease,
+      background-color 0.4s ease,
+      box-shadow 0.4s ease;
+  }
 
-    header {
-      position: absolute;
-      top: 200px; /* Positioned lower initially */
-      left: 0;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      background-color: transparent;
-      padding: 30px 0;
-      transition:
-        top 0.4s ease,
-        padding 0.4s ease,
-        background-color 0.4s ease,
-        box-shadow 0.4s ease;
-      z-index: 1000;
-    }
+  header.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 0;
+    background-color: #2C5F2D; /* Forest green sticky background */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+  }
 
-    header.sticky {
-      position: fixed;
-      top: 0;
-      padding: 10px 0;
-      background-color: #2C5F2D; /* Forest green sticky background */
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
-    }
+  nav a {
+    margin: 0 20px;
+    text-decoration: none;
+    color: #A3C99C; /* Soft green links */
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s ease;
+  }
 
-    nav a {
-      margin: 0 20px;
-      text-decoration: none;
-      color: #A3C99C;
-      font-weight: bold;
-      font-size: 18px;
-      transition: color 0.3s ease;
-    }
+  nav a:hover {
+    color: #B07C49; /* Warm golden brown accent on hover */
+  }
 
-    nav a:hover {
-      color: #B07C49;
-    }
+  #content {
+    padding: 60px 40px;
+    max-width: 800px;
+    margin: auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    color: #F3F4ED; /* Ensure content text is cream */
 
-    #content {
-      padding: 60px 40px;
-      max-width: 800px;
-      margin: auto;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
+  }
 
-    #content.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
+#content.show {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-    .spacer {
-      height: 1500px;
-    }
-  </style>
+  .spacer {
+    height: 1500px;
+  }
+</style>
+
 </head>
 <body>
-
-  <!-- Fake hero space to push navbar down -->
   <div class="hero">
     <h1>Welcome to My Photography</h1>
   </div>
-
-  <!-- Sticky header -->
   <header id="main-header">
     <nav>
       <a href="#" onclick="loadPage('home.html', event)">Home</a>
@@ -92,44 +80,42 @@
     </nav>
   </header>
 
-  <!-- Marker element to trigger sticky effect -->
-  <div id="sticky-trigger"></div>
-
-  <!-- AJAX Content -->
   <div id="content"></div>
   <div class="spacer"></div>
 
   <script>
     const header = document.getElementById('main-header');
     const content = document.getElementById('content');
-    const stickyTrigger = document.getElementById('sticky-trigger');
+    const stickyPoint = header.offsetTop + 100;
 
-    // Scroll watcher
+    // Sticky behavior
     window.addEventListener('scroll', () => {
-      const triggerTop = stickyTrigger.getBoundingClientRect().top;
-      if (triggerTop <= 0) {
+      if (window.scrollY >= stickyPoint) {
         header.classList.add('sticky');
       } else {
         header.classList.remove('sticky');
       }
     });
 
-    // AJAX loader
+    // Load page with animation
     function loadPage(page, event) {
       if (event) event.preventDefault();
+
+      // Start fade-out
       content.classList.remove('show');
 
+      // Wait for fade-out to finish before changing content
       setTimeout(() => {
         fetch(page)
           .then(res => res.text())
           .then(html => {
             content.innerHTML = html;
-            content.classList.add('show');
+            content.classList.add('show'); // Fade-in
           });
       }, 300);
     }
 
-    // Load home on startup
+    // Load home by default
     window.addEventListener("load", () => {
       loadPage('home.html');
     });

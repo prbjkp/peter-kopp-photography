@@ -2,45 +2,75 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Peter Kopp Photography</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Sticky Menu Demo</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+    }
+
+    header {
+      display: flex;
+      justify-content: center;
+      padding: 200px 0 20px; /* Starts lower on page */
+      transition: all 0.3s ease;
+    }
+
+    header.sticky {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 10px 0;
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+
+    #content {
+      padding: 40px;
+    }
+
+    .spacer {
+      height: 1500px; /* Creates scroll space */
+    }
+  </style>
 </head>
 <body>
+
   <header id="main-header">
-    <nav id="menu">
-      <a href="#" onclick="loadPage('home.html')">Home</a>
-      <a href="#" onclick="loadPage('about.html')">About</a>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
     </nav>
   </header>
 
-  <div id="spacer"></div>
-
   <div id="content">
-    <!-- AJAX content will go here -->
+    <h1>Welcome</h1>
+    <p>This is your content area. Scroll down to see the sticky nav.</p>
   </div>
 
+  <div class="spacer"></div>
+
   <script>
-  function loadPage(page) {
-    fetch(page)
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('content').innerHTML = html;
-      });
-  }
+    const header = document.getElementById('main-header');
+    const stickyPoint = header.offsetTop + 100; // Start sticking after scrolling past this
 
-  window.addEventListener("load", () => loadPage('home.html'));
+    window.addEventListener('scroll', () => {
+      if (window.scrollY >= stickyPoint) {
+        header.classList.add('sticky');
+      } else {
+        header.classList.remove('sticky');
+      }
+    });
+  </script>
 
-  // Sticky scroll effect
-  const header = document.getElementById('main-header');
-  const spacer = document.getElementById('spacer');
-
-  const stickyThreshold = header.offsetTop + header.offsetHeight / 2;
-
-  window.addEventListener('scroll', () => {
-    if (window.scrollY >= stickyThreshold) {
-      header.classList.add('sticky');
-    } else {
-      header.classList.remove('sticky');
-    }
-  });
-</script>
+</body>
+</html>

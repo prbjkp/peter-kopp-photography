@@ -3,6 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <title>Smooth Dark Sticky Site</title>
+  <style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #152A17; /* Dark forest green background */
+    color: #F3F4ED; /* Soft cream text */
+  }
+
+  header {
+    display: flex;
+    justify-content: center;
+    padding: 200px 0 30px;
+    background-color: transparent;
+    position: relative;
+    transition:
+      padding 0.4s ease,
+      background-color 0.4s ease,
+      box-shadow 0.4s ease;
+  }
+
+  header.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 0;
+    background-color: #2C5F2D; /* Forest green sticky background */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+  }
+
+  nav a {
+    margin: 0 20px;
+    text-decoration: none;
+    color: #A3C99C; /* Soft green links */
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s ease;
+  }
+
+  nav a:hover {
+    color: #B07C49; /* Warm golden brown accent on hover */
+  }
+
+  #content {
+    padding: 60px 40px;
+    max-width: 800px;
+    margin: auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    color: #F3F4ED; /* Ensure content text is cream */
+  }
+
+  #content.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .spacer {
+    height: 1500px;
+  }
+</style>
+
 </head>
 <body>
 

@@ -60,9 +60,10 @@
 
   <header id="main-header">
     <nav>
-      <a href="#">Home</a>
-      <a href="#">About</a>
-    </nav>
+  <a href="#" onclick="loadPage('home.html')">Home</a>
+  <a href="#" onclick="loadPage('about.html')">About</a>
+</nav>
+
   </header>
 
   <div id="content">
@@ -73,17 +74,31 @@
   <div class="spacer"></div>
 
   <script>
-    const header = document.getElementById('main-header');
-    const stickyPoint = header.offsetTop + 100;
+  // Sticky header
+  const header = document.getElementById('main-header');
+  const stickyPoint = header.offsetTop + 100;
 
-    window.addEventListener('scroll', () => {
-      if (window.scrollY >= stickyPoint) {
-        header.classList.add('sticky');
-      } else {
-        header.classList.remove('sticky');
-      }
-    });
-  </script>
+  window.addEventListener('scroll', () => {
+    if (window.scrollY >= stickyPoint) {
+      header.classList.add('sticky');
+    } else {
+      header.classList.remove('sticky');
+    }
+  });
+
+  // 🛠️ AJAX Page Loader
+  function loadPage(page) {
+    fetch(page)
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('content').innerHTML = html;
+      });
+  }
+
+  // Optional: load home page on load
+  window.addEventListener("load", () => loadPage('home.html'));
+</script>
+
 
 </body>
 </html>

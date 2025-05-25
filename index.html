@@ -3,68 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Smooth Dark Sticky Site</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #1a1a1a;
-      color: #f0f0f0;
-    }
-
-    header {
-      display: flex;
-      justify-content: center;
-      padding: 200px 0 30px;
-      background-color: transparent;
-      position: relative;
-      transition:
-        padding 0.4s ease,
-        background-color 0.4s ease,
-        box-shadow 0.4s ease;
-    }
-
-    header.sticky {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      padding: 10px 0;
-      background-color: #111;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
-      z-index: 1000;
-    }
-
-    nav a {
-      margin: 0 20px;
-      text-decoration: none;
-      color: #ccc;
-      font-weight: bold;
-      font-size: 18px;
-      transition: color 0.3s ease;
-    }
-
-    nav a:hover {
-      color: #00bfff;
-    }
-
-    #content {
-      padding: 60px 40px;
-      max-width: 800px;
-      margin: auto;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-
-    #content.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .spacer {
-      height: 1500px;
-    }
-  </style>
 </head>
 <body>
 

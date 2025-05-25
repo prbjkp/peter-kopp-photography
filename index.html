@@ -2,37 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My AJAX Site</title>
+  <title>Sticky Menu Demo</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <nav>
-    <a href="#" onclick="loadPage('home.html')">Home</a>
-    <a href="#" onclick="loadPage('about.html')">About</a>
-  </nav>
+  <header id="main-header">
+    <nav id="menu">
+      <a href="#" onclick="loadPage('home.html')">Home</a>
+      <a href="#" onclick="loadPage('about.html')">About</a>
+    </nav>
+  </header>
+
+  <div id="spacer"></div>
 
   <div id="content">
-    <!-- Dynamic content will be loaded here -->
+    <!-- AJAX content will go here -->
   </div>
 
   <script>
     function loadPage(page) {
       fetch(page)
-        .then(response => {
-          if (!response.ok) throw new Error("Page not found");
-          return response.text();
-        })
+        .then(res => res.text())
         .then(html => {
           document.getElementById('content').innerHTML = html;
-        })
-        .catch(error => {
-          document.getElementById('content').innerHTML = "<p>Page not found.</p>";
-          console.error("Error loading page:", error);
         });
     }
 
-    // Load default page on first visit
     window.addEventListener("load", () => loadPage('home.html'));
-  </script>
-</body>
-</html>
+
+    // Sticky scroll effect
+   const header = document.getElementById('main-header');
+    </script>

@@ -34,7 +34,7 @@
     /* Hero menu buttons */
     #hero-menu {
       position: absolute;
-      bottom: 40px; /* buffer from bottom */
+      bottom: 80px; /* buffer from bottom */
       width: 100%;
       display: flex;
       justify-content: center;
@@ -81,13 +81,14 @@
     }
 
     #sticky-brand {
-      font-size: 1.4rem;
-      font-weight: bold;
-      color: #F3F4ED;
-      opacity: 0;
-      transform: translateY(-10px);
-      transition: all 0.4s ease;
-    }
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #F3F4ED;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.4s ease, transform 0.4s ease; /* ✅ Add this line */
+}
+
 
     header.sticky #sticky-brand {
       opacity: 1;

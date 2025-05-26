@@ -109,6 +109,11 @@
       pointer-events: auto;
     }
 
+    nav a.active {
+      color: #F3F4ED;
+      text-decoration: underline;
+    }
+
     /* Sticky state transitions */
     header.sticky {
       background-color: rgba(0, 0, 0, 0.6);
@@ -163,56 +168,52 @@
         padding: 15px 20px;
       }
 
-      /* Hamburger button styles */
       #hamburger {
-  display: block;
-  background: none;
-  border: none;
-  cursor: pointer;
-  width: 30px;
-  height: 25px;
-  position: absolute;
-  bottom: 10px;
-  left: 90%;
-  transform: translateX(-50%);
-  z-index: 1100;
-}
+        display: block;
+        background: none;
+        border: none;
+        cursor: pointer;
+        width: 30px;
+        height: 25px;
+        position: absolute;
+        bottom: 12px;
+        left: 90%;
+        transform: translateX(-50%);
+        z-index: 1100;
+      }
 
-#hamburger span {
-  position: absolute;
-  height: 3px;
-  width: 100%;
-  background: #A3C99C;
-  left: 0;
-  transition: all 0.3s ease;
-  border-radius: 2px;
-}
+      #hamburger span {
+        position: absolute;
+        height: 3px;
+        width: 100%;
+        background: #A3C99C;
+        left: 0;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+      }
 
-#hamburger span:nth-child(1) {
-  top: 0;
-}
-#hamburger span:nth-child(2) {
-  top: 11px;
-}
-#hamburger span:nth-child(3) {
-  bottom: 0;
-}
+      #hamburger span:nth-child(1) {
+        top: 0;
+      }
+      #hamburger span:nth-child(2) {
+        top: 11px;
+      }
+      #hamburger span:nth-child(3) {
+        bottom: 0;
+      }
 
-#hamburger.open span:nth-child(1) {
-  transform: rotate(45deg);
-  top: 11px;
-}
-#hamburger.open span:nth-child(2) {
-  opacity: 0;
-}
-#hamburger.open span:nth-child(3) {
-  transform: rotate(-45deg);
-  bottom: 11px;
-}
+      #hamburger.open span:nth-child(1) {
+        transform: rotate(45deg);
+        top: 11px;
+      }
+      #hamburger.open span:nth-child(2) {
+        opacity: 0;
+      }
+      #hamburger.open span:nth-child(3) {
+        transform: rotate(-45deg);
+        bottom: 11px;
+      }
 
-
-
-      /* Nav is hidden by default on mobile */
       nav {
         position: fixed;
         top: 60px;
@@ -223,13 +224,13 @@
         align-items: center;
         max-height: 0;
         overflow: hidden;
-        transition: max-height 0.3s ease;
+        transition: max-height 0.3s ease, opacity 0.3s ease;
         pointer-events: none;
         opacity: 0;
       }
 
       nav.open {
-        max-height: 300px; /* enough for your links */
+        max-height: 300px;
         pointer-events: auto;
         opacity: 1;
       }
@@ -237,17 +238,17 @@
       nav a {
         margin: 15px 0;
         font-size: 18px;
-        opacity: 1; /* keep visible when nav opens */
+        opacity: 1;
         transform: translateY(0);
       }
-@font-face {
-  font-family: 'BoldHead';
-  src: url('bold.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
 
-      /* Hide hero menu on mobile */
+      @font-face {
+        font-family: 'BoldHead';
+        src: url('bold.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+      }
+
       #hero-menu {
         display: none;
       }
@@ -255,10 +256,10 @@
       #content {
         padding: 40px 20px;
       }
-      #brand-name {
-  font-family: 'BoldHead', serif;
-}
 
+      #brand-name {
+        font-family: 'BoldHead', serif;
+      }
     }
   </style>
 </head>
@@ -276,14 +277,11 @@
   <header id="main-header">
     <div id="nav-container">
       <div id="sticky-brand">Peter Kopp Photography</div>
-      
-      <!-- Hamburger for mobile -->
-      <button id="hamburger" aria-label="Toggle navigation menu">
+      <button id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
       </button>
-      
       <nav>
         <a href="#" onclick="loadPage('home.html', event)">Home</a>
         <a href="#" onclick="loadPage('about.html', event)">Portfolio</a>
@@ -323,11 +321,21 @@
       }
     });
 
+    function setActiveLink(page) {
+      document.querySelectorAll('nav a').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('onclick')?.includes(page)) {
+          link.classList.add('active');
+        }
+      });
+    }
+
     function loadPage(page, event) {
       if (event) event.preventDefault();
 
-      // Close mobile nav on link click
       nav.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
 
       content.classList.remove('show');
       heroText.classList.add('fade-out');
@@ -340,20 +348,36 @@
         heroText.classList.remove('fade-out');
 
         fetch(page)
-          .then(res => res.text())
+          .then(res => {
+            if (!res.ok) throw new Error('Page load error');
+            return res.text();
+          })
           .then(html => {
             content.innerHTML = html;
+            content.classList.add('show');
+            setActiveLink(page);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          })
+          .catch(err => {
+            content.innerHTML = `<p style="text-align:center; color:#F88;">Failed to load page.</p>`;
             content.classList.add('show');
           });
       }, 500);
     }
 
-    // Toggle nav menu on hamburger click
     hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('open'); // animate icon
-  nav.classList.toggle('open');       // show/hide nav
-});
+      const isOpen = hamburger.classList.toggle('open');
+      nav.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen);
+    });
 
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('open')) {
+        nav.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      }
+    });
 
     window.addEventListener("load", () => {
       loadPage('home.html');

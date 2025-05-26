@@ -299,6 +299,36 @@
   z-index: 2100;
 }
 
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 15px;
+  padding: 20px;
+  justify-items: center;
+}
+
+.gallery img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  max-width: 100%;
+}
+
+.gallery img:hover {
+  transform: scale(1.03);
+}
+
+/* Mobile: stack vertically */
+@media (max-width: 768px) {
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+}
+
+
   </style>
 </head>
 <div id="lightbox" class="hidden">

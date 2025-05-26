@@ -4,101 +4,119 @@
   <meta charset="UTF-8">
 <style>
   body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #152A17;
-  color: #F3F4ED;
-}
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #152A17;
+    color: #F3F4ED;
+  }
 
-.hero {
-  position: relative;
-  height: 100vh;
-  background: url('hero.jpg') center/cover no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+  .hero {
+    position: relative;
+    height: 100vh;
+    background: url('hero.jpg') center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
 
-.hero h1 {
-  font-size: 4rem;
-  color: #F3F4ED;
-  transition: all 0.5s ease;
-}
+  .hero h1 {
+    font-size: 4rem;
+    color: #F3F4ED;
+    transition: all 0.5s ease;
+  }
 
-#main-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 20px 40px;
-  display: flex;
-  justify-content: center;
-  pointer-events: none; /* Disable pointer until elements scroll into view */
-  z-index: 1000;
-}
+  #main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 1000;
+  }
 
-#nav-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 1200px;
-  opacity: 0;
-  transform: translateY(-20px);
-  transition: all 0.4s ease;
-  pointer-events: auto;
-}
+  #nav-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 10, 10, 0.9); /* Dark bar */
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.4s ease;
+    z-index: -1;
+  }
 
-#sticky-brand {
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: #F3F4ED;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: all 0.4s ease;
-}
+  header.sticky #nav-bar {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-header.sticky #sticky-brand {
-  opacity: 1;
-  transform: translateY(0);
-}
+  #nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.4s ease;
+    pointer-events: auto;
+  }
 
-nav a {
-  margin: 0 15px;
-  text-decoration: none;
-  color: #A3C99C;
-  font-weight: bold;
-  font-size: 18px;
-  transition: color 0.3s ease;
-  pointer-events: auto;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: all 0.4s ease;
-}
+  #sticky-brand {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #F3F4ED;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.4s ease;
+  }
 
-header.sticky nav a {
-  opacity: 1;
-  transform: translateY(0);
-}
+  header.sticky #sticky-brand {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-#content {
-  padding: 60px 40px;
-  max-width: 800px;
-  margin: auto;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
+  nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #A3C99C;
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s ease;
+    pointer-events: auto;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.4s ease;
+  }
 
-#content.show {
-  opacity: 1;
-  transform: translateY(0);
-}
+  header.sticky nav a {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-.spacer {
-  height: 1500px;
-}
+  #content {
+    padding: 60px 40px;
+    max-width: 800px;
+    margin: auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  #content.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .spacer {
+    height: 1500px;
+  }
 </style>
 
 </head>
@@ -109,6 +127,7 @@ header.sticky nav a {
   </section>
 
   <header id="main-header">
+    <div id="nav-bar"></div> <!-- New dark background layer -->
     <div id="nav-container">
       <div id="sticky-brand">Peter Kopp Photography</div>
       <nav>
@@ -162,7 +181,6 @@ header.sticky nav a {
     loadPage('home.html');
   });
 </script>
-
 
 </body>
 </html>

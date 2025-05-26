@@ -1,19 +1,19 @@
 <div class="gallery">
   <div class="thumb">
-    <img src="ghost.jpg" alt="Ghost Shifter" onclick="openLightbox('ghost.jpg')" />
+    <img src="ghost.jpg" alt="Ghost Shifter" />
     <p class="caption">Ghost Shifter</p>
   </div>
   <div class="thumb">
-    <img src="badge.jpg" alt="Badge" onclick="openLightbox('badge.jpg')" />
+    <img src="badge.jpg" alt="Badge" />
     <p class="caption">Badge</p>
   </div>
   <div class="thumb">
-    <img src="dalorien.jpg" alt="Dalorien" onclick="openLightbox('dalorien.jpg')" />
+    <img src="dalorien.jpg" alt="Dalorien" />
     <p class="caption">Dalorien</p>
   </div>
 </div>
 
-<div id="lightbox" onclick="closeLightbox()">
+<div id="lightbox">
   <img id="lightbox-img" src="" alt="Full Image" />
 </div>
 
@@ -69,16 +69,22 @@
 </style>
 
 <script>
-  function openLightbox(imageSrc) {
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    lightboxImg.src = imageSrc;
-    lightbox.classList.add('show');
-  }
+  // Wait until DOM is available after loading via fetch
+  document.addEventListener("DOMContentLoaded", () => {
+    const thumbnails = document.querySelectorAll(".gallery img");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
 
-  function closeLightbox() {
-    const lightbox = document.getElementById('lightbox');
-    lightbox.classList.remove('show');
-    document.getElementById('lightbox-img').src = '';
-  }
+    thumbnails.forEach(img => {
+      img.addEventListener("click", () => {
+        lightboxImg.src = img.src;
+        lightbox.classList.add("show");
+      });
+    });
+
+    lightbox.addEventListener("click", () => {
+      lightbox.classList.remove("show");
+      lightboxImg.src = "";
+    });
+  });
 </script>

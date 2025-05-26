@@ -2,152 +2,148 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-<style>
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #152A17;
-    color: #F3F4ED;
-  }
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #152A17;
+      color: #F3F4ED;
+    }
 
-  .hero {
-    position: relative;
-    height: 100vh;
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('hero.jpg') center/cover no-repeat;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: #F3F4ED;
-  }
+    .hero {
+      position: relative;
+      height: 100vh;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('hero.jpg') center/cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #F3F4ED;
+    }
 
-  #brand-name {
-    font-size: 4rem;
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    opacity: 1;
-  }
+    #brand-name {
+      font-size: 4rem;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      opacity: 1;
+    }
 
-  #brand-name.fade-out {
-    opacity: 0;
-  }
+    #brand-name.fade-out {
+      opacity: 0;
+    }
 
-  /* Hero menu buttons */
-  #hero-menu {
-    position: absolute;
-    bottom: 80px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    opacity: 1;
-    transition: opacity 0.5s ease;
-    pointer-events: auto;
-    z-index: 10;
-  }
+    #hero-menu {
+      position: absolute;
+      bottom: 80px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+      pointer-events: auto;
+      z-index: 10;
+    }
 
-  #hero-menu a {
-    color: #A3C99C;
-    font-weight: bold;
-    font-size: 18px;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  #hero-menu a:hover {
-    color: #F3F4ED;
-  }
+    #hero-menu a {
+      color: #A3C99C;
+      font-weight: bold;
+      font-size: 18px;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    #hero-menu a:hover {
+      color: #F3F4ED;
+    }
 
-  #main-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 0; /* Remove padding so it hits the top */
-    display: flex;
-    justify-content: center;
-    pointer-events: none;
-    z-index: 1000;
-  }
+    #main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 1000;
+    }
 
-  #nav-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 100%;
-    padding: 20px 40px; /* Move padding here */
-    opacity: 0;
-    transform: translateY(-20px);
-    transition: all 0.4s ease;
-    pointer-events: auto;
-    background: transparent;
-  }
+    #nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 100%;
+      padding: 20px 40px;
+      background: transparent;
+      opacity: 0;
+      transform: translateY(-20px);
+      pointer-events: auto;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
 
-  header.sticky #nav-container {
-    opacity: 1;
-    transform: translateY(0);
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('hero.jpg') center/cover no-repeat;
-    backdrop-filter: brightness(0.6);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
+    #sticky-brand {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #F3F4ED;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
 
-  #sticky-brand {
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: #F3F4ED;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #A3C99C;
+      font-weight: bold;
+      font-size: 18px;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      pointer-events: auto;
+    }
 
-  header.sticky #sticky-brand {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    /* Sticky state transitions */
+    header.sticky #nav-container {
+      opacity: 1;
+      transform: translateY(0);
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('hero.jpg') center/cover no-repeat;
+      backdrop-filter: brightness(0.6);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
-  nav a {
-    margin: 0 15px;
-    text-decoration: none;
-    color: #A3C99C;
-    font-weight: bold;
-    font-size: 18px;
-    transition: color 0.3s ease;
-    pointer-events: auto;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.4s ease;
-  }
+    header.sticky #sticky-brand {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-  header.sticky nav a {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    header.sticky nav a {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-  #content {
-    padding: 60px 40px;
-    max-width: 800px;
-    margin: auto;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
+    #content {
+      padding: 60px 40px;
+      max-width: 800px;
+      margin: auto;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
 
-  #content.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    #content.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-  .spacer {
-    height: 1500px;
-  }
-</style>
-
-
+    .spacer {
+      height: 1500px;
+    }
+  </style>
 </head>
 <body>
 
   <section class="hero">
     <h1 id="brand-name">Peter Kopp Photography</h1>
-
     <div id="hero-menu">
       <a href="#" onclick="loadPage('home.html', event)">Home</a>
       <a href="#" onclick="loadPage('about.html', event)">Portfolio</a>
@@ -171,8 +167,6 @@
 
   <script>
     const header = document.getElementById('main-header');
-    const navContainer = document.getElementById('nav-container');
-    const stickyBrand = document.getElementById('sticky-brand');
     const content = document.getElementById('content');
     const heroText = document.getElementById('brand-name');
     const heroMenu = document.getElementById('hero-menu');
@@ -186,21 +180,11 @@
     window.addEventListener('scroll', () => {
       if (window.scrollY > window.innerHeight * 0.6) {
         header.classList.add('sticky');
-        navContainer.style.opacity = '1';
-        navContainer.style.transform = 'translateY(0)';
-        stickyBrand.style.opacity = '1';
-        stickyBrand.style.transform = 'translateY(0)';
-
         heroText.style.opacity = '0';
         heroText.style.transform = 'translateY(-50px)';
         heroMenu.style.opacity = '0';
       } else {
         header.classList.remove('sticky');
-        navContainer.style.opacity = '0';
-        navContainer.style.transform = 'translateY(-20px)';
-        stickyBrand.style.opacity = '0';
-        stickyBrand.style.transform = 'translateY(-10px)';
-
         heroText.style.opacity = '1';
         heroText.style.transform = 'translateY(0)';
         heroMenu.style.opacity = '1';
@@ -211,20 +195,15 @@
       if (event) event.preventDefault();
 
       content.classList.remove('show');
-
-      // Fade out hero text
       heroText.classList.add('fade-out');
 
       setTimeout(() => {
-        // Update hero text
         if (heroTitles[page]) {
           heroText.textContent = heroTitles[page];
         }
 
-        // Fade hero text back in
         heroText.classList.remove('fade-out');
 
-        // Load new page content
         fetch(page)
           .then(res => res.text())
           .then(html => {

@@ -2,128 +2,109 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-<style>
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #0e1c12;
-    color: #F3F4ED;
-  }
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #152A17;
+      color: #F3F4ED;
+    }
 
-  .hero {
-  position: relative;
-  height: 100vh;
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-              url('hero.jpg') center/cover no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+    .hero {
+      position: relative;
+      height: 100vh;
+      background: url('hero.jpg') center/cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
 
+    #brand-name {
+      font-size: 4rem;
+      color: #F3F4ED;
+      transition: opacity 0.5s ease;
+      opacity: 1;
+    }
 
-  .hero h1 {
-    font-size: 4rem;
-    color: #F3F4ED;
-    transition: all 0.5s ease;
-  }
+    #brand-name.fade-out {
+      opacity: 0;
+    }
 
-  #main-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px 40px;
-    display: flex;
-    justify-content: center;
-    pointer-events: none;
-    z-index: 1000;
-  }
+    #main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: center;
+      pointer-events: none; /* Disable pointer until elements scroll into view */
+      z-index: 1000;
+    }
 
-  #nav-bar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('hero.jpg') center/cover no-repeat;
-  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('hero.jpg') center/cover no-repeat;
-  backdrop-filter: blur(4px); /* Optional: adds glassy effect */
-  opacity: 0;
-  transform: translateY(-20px);
-  transition: all 0.4s ease;
-  z-index: -1;
-}
+    #nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1200px;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 0.4s ease;
+      pointer-events: auto;
+    }
 
+    #sticky-brand {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #F3F4ED;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.4s ease;
+    }
 
-  header.sticky #nav-bar {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    header.sticky #sticky-brand {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-  #nav-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1200px;
-    opacity: 0;
-    transform: translateY(-20px);
-    transition: all 0.4s ease;
-    pointer-events: auto;
-  }
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #A3C99C;
+      font-weight: bold;
+      font-size: 18px;
+      transition: color 0.3s ease;
+      pointer-events: auto;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.4s ease;
+    }
 
-  #sticky-brand {
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: #F3F4ED;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.4s ease;
-  }
+    header.sticky nav a {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-  header.sticky #sticky-brand {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    #content {
+      padding: 60px 40px;
+      max-width: 800px;
+      margin: auto;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
 
-  nav a {
-    margin: 0 15px;
-    text-decoration: none;
-    color: #A3C99C;
-    font-weight: bold;
-    font-size: 18px;
-    transition: color 0.3s ease;
-    pointer-events: auto;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.4s ease;
-  }
+    #content.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-  header.sticky nav a {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  #content {
-    padding: 60px 40px;
-    max-width: 800px;
-    margin: auto;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-
-  #content.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .spacer {
-    height: 1500px;
-  }
-</style>
-
+    .spacer {
+      height: 1500px;
+    }
+  </style>
 </head>
 <body>
 
@@ -132,7 +113,6 @@
   </section>
 
   <header id="main-header">
-    <div id="nav-bar"></div> <!-- New dark background layer -->
     <div id="nav-container">
       <div id="sticky-brand">Peter Kopp Photography</div>
       <nav>
@@ -146,47 +126,66 @@
   <div id="content"></div>
   <div class="spacer"></div>
 
- <script>
-  const header = document.getElementById('main-header');
-  const navContainer = document.getElementById('nav-container');
-  const stickyBrand = document.getElementById('sticky-brand');
-  const content = document.getElementById('content');
-  const heroText = document.getElementById('brand-name');
+  <script>
+    const header = document.getElementById('main-header');
+    const navContainer = document.getElementById('nav-container');
+    const stickyBrand = document.getElementById('sticky-brand');
+    const content = document.getElementById('content');
+    const heroText = document.getElementById('brand-name');
 
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > window.innerHeight * 0.6) {
-      header.classList.add('sticky');
-      navContainer.style.opacity = '1';
-      navContainer.style.transform = 'translateY(0)';
-      heroText.style.opacity = '0';
-      heroText.style.transform = 'translateY(-50px)';
-    } else {
-      header.classList.remove('sticky');
-      navContainer.style.opacity = '0';
-      navContainer.style.transform = 'translateY(-20px)';
-      heroText.style.opacity = '1';
-      heroText.style.transform = 'translateY(0)';
+    const heroTitles = {
+      'home.html': 'Peter Kopp Photography',
+      'about.html': 'Portfolio',
+      'contact.html': 'Contact'
+    };
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > window.innerHeight * 0.6) {
+        header.classList.add('sticky');
+        navContainer.style.opacity = '1';
+        navContainer.style.transform = 'translateY(0)';
+        heroText.style.opacity = '0';
+        heroText.style.transform = 'translateY(-50px)';
+      } else {
+        header.classList.remove('sticky');
+        navContainer.style.opacity = '0';
+        navContainer.style.transform = 'translateY(-20px)';
+        heroText.style.opacity = '1';
+        heroText.style.transform = 'translateY(0)';
+      }
+    });
+
+    function loadPage(page, event) {
+      if (event) event.preventDefault();
+
+      content.classList.remove('show');
+
+      // Fade out hero text
+      heroText.classList.add('fade-out');
+
+      setTimeout(() => {
+        // Update hero text
+        if (heroTitles[page]) {
+          heroText.textContent = heroTitles[page];
+        }
+
+        // Fade hero text back in
+        heroText.classList.remove('fade-out');
+
+        // Load new page content
+        fetch(page)
+          .then(res => res.text())
+          .then(html => {
+            content.innerHTML = html;
+            content.classList.add('show');
+          });
+      }, 500);
     }
-  });
 
-  function loadPage(page, event) {
-    if (event) event.preventDefault();
-    content.classList.remove('show');
-
-    setTimeout(() => {
-      fetch(page)
-        .then(res => res.text())
-        .then(html => {
-          content.innerHTML = html;
-          content.classList.add('show');
-        });
-    }, 300);
-  }
-
-  window.addEventListener("load", () => {
-    loadPage('home.html');
-  });
-</script>
+    window.addEventListener("load", () => {
+      loadPage('home.html');
+    });
+  </script>
 
 </body>
 </html>

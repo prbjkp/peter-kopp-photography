@@ -331,28 +331,42 @@
       });
     }
 
-        function loadPage(url) {
-      fetch(url)
-        .then(response => response.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, "text/html");
+    
+    function loadPage(page, event) {
+      if (event) event.preventDefault();
 
-          document.getElementById("content").innerHTML = doc.body.innerHTML;
+      nav.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
 
-          // Execute any script tags inside the loaded HTML
-          const scripts = doc.querySelectorAll("script");
-          scripts.forEach(script => {
-            const newScript = document.createElement("script");
-            if (script.src) {
-              newScript.src = script.src;
-            } else {
-              newScript.textContent = script.textContent;
-            }
-            document.body.appendChild(newScript);
+      content.classList.remove('show');
+      heroText.classList.add('fade-out');
+
+      setTimeout(() => {
+        if (heroTitles[page]) {
+          heroText.textContent = heroTitles[page];
+        }
+
+        heroText.classList.remove('fade-out');
+
+        fetch(page)
+          .then(res => {
+            if (!res.ok) throw new Error('Page load error');
+            return res.text();
+          })
+          .then(html => {
+            content.innerHTML = html;
+            content.classList.add('show');
+            setActiveLink(page);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          })
+          .catch(err => {
+            content.innerHTML = `<p style="text-align:center; color:#F88;">Failed to load page.</p>`;
+            content.classList.add('show');
           });
-        });
+      }, 500);
     }
+
     hamburger.addEventListener('click', () => {
       const isOpen = hamburger.classList.toggle('open');
       nav.classList.toggle('open');

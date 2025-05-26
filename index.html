@@ -80,20 +80,20 @@
       pointer-events: auto;
     }
 
-    #sticky-brand {
+   #sticky-brand {
   font-size: 1.4rem;
   font-weight: bold;
   color: #F3F4ED;
   opacity: 0;
   transform: translateY(-10px);
-  transition: opacity 0.4s ease, transform 0.4s ease; /* ✅ Add this line */
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
+header.sticky #sticky-brand {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-    header.sticky #sticky-brand {
-      opacity: 1;
-      transform: translateY(0);
-    }
 
     nav a {
       margin: 0 15px;

@@ -165,33 +165,52 @@
 
       /* Hamburger button styles */
       #hamburger {
-        display: block;
-        background: none;
-        border: none;
-        cursor: pointer;
-        width: 30px;
-        height: 25px;
-        position: relative;
-        z-index: 1100;
-      }
-      #hamburger span {
-        position: absolute;
-        height: 3px;
-        width: 100%;
-        background: #A3C99C;
-        left: 0;
-        transition: 0.3s ease;
-        border-radius: 2px;
-      }
-      #hamburger span:nth-child(1) {
-        top: 0;
-      }
-      #hamburger span:nth-child(2) {
-        top: 11px;
-      }
-      #hamburger span:nth-child(3) {
-        bottom: 0;
-      }
+  display: block;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 30px;
+  height: 25px;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1100;
+}
+
+#hamburger span {
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background: #A3C99C;
+  left: 0;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+#hamburger span:nth-child(1) {
+  top: 0;
+}
+#hamburger span:nth-child(2) {
+  top: 11px;
+}
+#hamburger span:nth-child(3) {
+  bottom: 0;
+}
+
+#hamburger.open span:nth-child(1) {
+  transform: rotate(45deg);
+  top: 11px;
+}
+#hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+#hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg);
+  bottom: 11px;
+}
+
+
 
       /* Nav is hidden by default on mobile */
       nav {
@@ -321,8 +340,10 @@
 
     // Toggle nav menu on hamburger click
     hamburger.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
+  hamburger.classList.toggle('open'); // animate icon
+  nav.classList.toggle('open');       // show/hide nav
+});
+
 
     window.addEventListener("load", () => {
       loadPage('home.html');

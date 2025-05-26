@@ -34,7 +34,7 @@
   /* Hero menu buttons */
   #hero-menu {
     position: absolute;
-    bottom: 80px; /* buffer from bottom */
+    bottom: 80px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -61,7 +61,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px 40px;
+    padding: 0; /* Remove padding so it hits the top */
     display: flex;
     justify-content: center;
     pointer-events: none;
@@ -73,7 +73,8 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    max-width: 1200px;
+    max-width: 100%;
+    padding: 20px 40px; /* Move padding here */
     opacity: 0;
     transform: translateY(-20px);
     transition: all 0.4s ease;
@@ -86,7 +87,6 @@
     transform: translateY(0);
     background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('hero.jpg') center/cover no-repeat;
     backdrop-filter: brightness(0.6);
-    padding: 20px 40px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
@@ -140,6 +140,7 @@
     height: 1500px;
   }
 </style>
+
 
 </head>
 <body>

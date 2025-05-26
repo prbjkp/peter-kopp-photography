@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -109,7 +113,6 @@
       pointer-events: auto;
     }
 
-    /* Sticky state transitions */
     header.sticky {
       background-color: rgba(0, 0, 0, 0.6);
       backdrop-filter: brightness(0.6);
@@ -149,7 +152,7 @@
       height: 1500px;
     }
 
-    /* --- Mobile Responsive Styles --- */
+    /* ----------------- Mobile Styles ------------------- */
     @media (max-width: 768px) {
       #brand-name {
         font-size: 2.5rem;
@@ -163,37 +166,7 @@
         padding: 15px 20px;
       }
 
-      /* Hamburger button styles */
-      #hamburger {
-        display: block;
-        background: none;
-        border: none;
-        cursor: pointer;
-        width: 30px;
-        height: 25px;
-        position: relative;
-        z-index: 1100;
-      }
-      #hamburger span {
-        position: absolute;
-        height: 3px;
-        width: 100%;
-        background: #A3C99C;
-        left: 0;
-        transition: 0.3s ease;
-        border-radius: 2px;
-      }
-      #hamburger span:nth-child(1) {
-        top: 0;
-      }
-      #hamburger span:nth-child(2) {
-        top: 11px;
-      }
-      #hamburger span:nth-child(3) {
-        bottom: 0;
-      }
-
-      /* Nav is hidden by default on mobile */
+      /* Hide default nav on mobile */
       nav {
         position: fixed;
         top: 60px;
@@ -204,26 +177,69 @@
         align-items: center;
         max-height: 0;
         overflow: hidden;
-        transition: max-height 0.3s ease;
+        transition: max-height 0.3s ease, opacity 0.3s ease;
         pointer-events: none;
         opacity: 0;
+        z-index: 999;
       }
 
       nav.open {
-        max-height: 300px; /* enough for your links */
-        pointer-events: auto;
+        max-height: 300px;
         opacity: 1;
+        pointer-events: auto;
       }
 
       nav a {
         margin: 15px 0;
-        font-size: 18px;
-        opacity: 1; /* keep visible when nav opens */
+        opacity: 1;
         transform: translateY(0);
       }
 
       /* Hide hero menu on mobile */
       #hero-menu {
+        display: none;
+      }
+
+      /* Mobile Hamburger */
+      #hamburger {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 22px;
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 1100;
+      }
+
+      #hamburger span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background: #A3C99C;
+        border-radius: 2px;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+      }
+
+      #hamburger.open span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+
+      #hamburger.open span:nth-child(2) {
+        opacity: 0;
+      }
+
+      #hamburger.open span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+
+      /* Hide hamburger from sticky header on mobile */
+      header #hamburger {
         display: none;
       }
 
@@ -237,6 +253,11 @@
 
   <section class="hero">
     <h1 id="brand-name">Peter Kopp Photography</h1>
+    <button id="hamburger" aria-label="Toggle navigation menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
     <div id="hero-menu">
       <a href="#" onclick="loadPage('home.html', event)">Home</a>
       <a href="#" onclick="loadPage('about.html', event)">Portfolio</a>
@@ -247,14 +268,6 @@
   <header id="main-header">
     <div id="nav-container">
       <div id="sticky-brand">Peter Kopp Photography</div>
-      
-      <!-- Hamburger for mobile -->
-      <button id="hamburger" aria-label="Toggle navigation menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      
       <nav>
         <a href="#" onclick="loadPage('home.html', event)">Home</a>
         <a href="#" onclick="loadPage('about.html', event)">Portfolio</a>
@@ -296,9 +309,8 @@
 
     function loadPage(page, event) {
       if (event) event.preventDefault();
-
-      // Close mobile nav on link click
       nav.classList.remove('open');
+      hamburger.classList.remove('open');
 
       content.classList.remove('show');
       heroText.classList.add('fade-out');
@@ -319,9 +331,9 @@
       }, 500);
     }
 
-    // Toggle nav menu on hamburger click
     hamburger.addEventListener('click', () => {
       nav.classList.toggle('open');
+      hamburger.classList.toggle('open');
     });
 
     window.addEventListener("load", () => {

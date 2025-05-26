@@ -69,22 +69,19 @@
 </style>
 
 <script>
-  // Wait until DOM is available after loading via fetch
-  document.addEventListener("DOMContentLoaded", () => {
-    const thumbnails = document.querySelectorAll(".gallery img");
-    const lightbox = document.getElementById("lightbox");
-    const lightboxImg = document.getElementById("lightbox-img");
+  const thumbnails = document.querySelectorAll(".gallery img");
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
 
-    thumbnails.forEach(img => {
-      img.addEventListener("click", () => {
-        lightboxImg.src = img.src;
-        lightbox.classList.add("show");
-      });
+  thumbnails.forEach(img => {
+    img.addEventListener("click", () => {
+      lightboxImg.src = img.src;
+      lightbox.classList.add("show");
     });
+  });
 
-    lightbox.addEventListener("click", () => {
-      lightbox.classList.remove("show");
-      lightboxImg.src = "";
-    });
+  lightbox.addEventListener("click", () => {
+    lightbox.classList.remove("show");
+    lightboxImg.src = "";
   });
 </script>

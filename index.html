@@ -331,6 +331,31 @@
       });
     }
 
+    function loadPage(url) {
+  fetch(url)
+    .then(response => response.text())
+    .then(html => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+
+      // Get the HTML to inject
+      const content = doc.body.innerHTML;
+      document.getElementById("content").innerHTML = content;
+
+      // Execute any <script> tags in the loaded HTML
+      const scripts = doc.querySelectorAll("script");
+      scripts.forEach(script => {
+        const newScript = document.createElement("script");
+        if (script.src) {
+          newScript.src = script.src;
+        } else {
+          newScript.textContent = script.textContent;
+        }
+        document.body.appendChild(newScript);
+      });
+    });
+}
+
     function loadPage(page, event) {
       if (event) event.preventDefault();
 

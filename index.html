@@ -2,133 +2,167 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
-  <style>
+<style>
   body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #152A17; /* Dark forest green background */
-    color: #F3F4ED; /* Soft cream text */
-  }
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #152A17;
+  color: #F3F4ED;
+}
 
-  header {
-    display: flex;
-    justify-content: center;
-    padding: 200px 0 30px;
-    background-color: transparent;
-    position: relative;
-    transition:
-      padding 0.4s ease,
-      background-color 0.4s ease,
-      box-shadow 0.4s ease;
-  }
-
-  header.sticky {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: 10px 0;
-    background-color: #2C5F2D; /* Forest green sticky background */
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
-    z-index: 1000;
-  }
-
-  .hero {
-  height: -5px;  
+.hero {
+  position: relative;
+  height: 100vh;
+  background: url('your-hero-image.jpg') center/cover no-repeat;
   display: flex;
-  align-items: flex-start; /* Start from top */
   justify-content: center;
-  padding-top: 70px; /* Push text down ~70% */
-  background-color: transparent;
+  align-items: center;
   text-align: center;
 }
-  nav a {
-    margin: 0 20px;
-    text-decoration: none;
-    color: #A3C99C; /* Soft green links */
-    font-weight: bold;
-    font-size: 18px;
-    transition: color 0.3s ease;
-  }
 
-  nav a:hover {
-    color: #B07C49; /* Warm golden brown accent on hover */
-  }
+.hero h1 {
+  font-size: 4rem;
+  color: #F3F4ED;
+  transition: all 0.5s ease;
+}
 
-  #content {
-    padding: 60px 40px;
-    max-width: 800px;
-    margin: auto;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    color: #F3F4ED; /* Ensure content text is cream */
+#main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: center;
+  pointer-events: none; /* Disable pointer until elements scroll into view */
+  z-index: 1000;
+}
 
-  }
+#nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.4s ease;
+  pointer-events: auto;
+}
+
+#sticky-brand {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #F3F4ED;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.4s ease;
+}
+
+header.sticky #sticky-brand {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #A3C99C;
+  font-weight: bold;
+  font-size: 18px;
+  transition: color 0.3s ease;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.4s ease;
+}
+
+header.sticky nav a {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#content {
+  padding: 60px 40px;
+  max-width: 800px;
+  margin: auto;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
 
 #content.show {
   opacity: 1;
   transform: translateY(0);
 }
 
-  .spacer {
-    height: 1500px;
-  }
+.spacer {
+  height: 1500px;
+}
 </style>
 
 </head>
 <body>
+
+  <section class="hero">
+    <h1 id="brand-name">My Photography</h1>
+  </section>
+
   <header id="main-header">
-  <nav style="display: flex; align-items: center; gap: 40px;">
-    <div class="site-title">Peter Kopp Photography</div>
-    <div class="nav-links">
-      <a href="#" onclick="loadPage('home.html', event)">Home</a>
-      <a href="#" onclick="loadPage('about.html', event)">About</a>
+    <div id="nav-container">
+      <div id="sticky-brand">My Photography</div>
+      <nav>
+        <a href="#" onclick="loadPage('home.html', event)">Home</a>
+        <a href="#" onclick="loadPage('about.html', event)">About</a>
+      </nav>
     </div>
-  </nav>
-</header>
+  </header>
 
   <div id="content"></div>
   <div class="spacer"></div>
 
-  <script>
-    const header = document.getElementById('main-header');
-    const content = document.getElementById('content');
-    const stickyPoint = header.offsetTop + 100;
+ <script>
+  const header = document.getElementById('main-header');
+  const navContainer = document.getElementById('nav-container');
+  const stickyBrand = document.getElementById('sticky-brand');
+  const content = document.getElementById('content');
+  const heroText = document.getElementById('brand-name');
 
-    // Sticky behavior
-    window.addEventListener('scroll', () => {
-      if (window.scrollY >= stickyPoint) {
-        header.classList.add('sticky');
-      } else {
-        header.classList.remove('sticky');
-      }
-    });
-
-    // Load page with animation
-    function loadPage(page, event) {
-      if (event) event.preventDefault();
-
-      // Start fade-out
-      content.classList.remove('show');
-
-      // Wait for fade-out to finish before changing content
-      setTimeout(() => {
-        fetch(page)
-          .then(res => res.text())
-          .then(html => {
-            content.innerHTML = html;
-            content.classList.add('show'); // Fade-in
-          });
-      }, 300);
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > window.innerHeight * 0.6) {
+      header.classList.add('sticky');
+      navContainer.style.opacity = '1';
+      navContainer.style.transform = 'translateY(0)';
+      heroText.style.opacity = '0';
+      heroText.style.transform = 'translateY(-50px)';
+    } else {
+      header.classList.remove('sticky');
+      navContainer.style.opacity = '0';
+      navContainer.style.transform = 'translateY(-20px)';
+      heroText.style.opacity = '1';
+      heroText.style.transform = 'translateY(0)';
     }
+  });
 
-    // Load home by default
-    window.addEventListener("load", () => {
-      loadPage('home.html');
-    });
-  </script>
+  function loadPage(page, event) {
+    if (event) event.preventDefault();
+    content.classList.remove('show');
+
+    setTimeout(() => {
+      fetch(page)
+        .then(res => res.text())
+        .then(html => {
+          content.innerHTML = html;
+          content.classList.add('show');
+        });
+    }, 300);
+  }
+
+  window.addEventListener("load", () => {
+    loadPage('home.html');
+  });
+</script>
+
 
 </body>
 </html>

@@ -20,16 +20,18 @@
       text-align: center;
       color: #F3F4ED;
     }
+#brand-name {
+  font-size: 4rem;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  opacity: 1;
+  transform: translateY(0);
+}
 
-    #brand-name {
-      font-size: 4rem;
-      transition: opacity 0.5s ease, transform 0.5s ease;
-      opacity: 1;
-    }
+#brand-name.fade-out {
+  opacity: 0;
+  transform: translateY(-50px);
+}
 
-    #brand-name.fade-out {
-      opacity: 0;
-    }
 
     #hero-menu {
       position: absolute;
@@ -179,16 +181,15 @@
 
     window.addEventListener('scroll', () => {
       if (window.scrollY > window.innerHeight * 0.6) {
-        header.classList.add('sticky');
-        heroText.style.opacity = '0';
-        heroText.style.transform = 'translateY(-50px)';
-        heroMenu.style.opacity = '0';
-      } else {
-        header.classList.remove('sticky');
-        heroText.style.opacity = '1';
-        heroText.style.transform = 'translateY(0)';
-        heroMenu.style.opacity = '1';
-      }
+  header.classList.add('sticky');
+  heroText.classList.add('fade-out');
+  heroMenu.style.opacity = '0';
+} else {
+  header.classList.remove('sticky');
+  heroText.classList.remove('fade-out');
+  heroMenu.style.opacity = '1';
+}
+
     });
 
     function loadPage(page, event) {

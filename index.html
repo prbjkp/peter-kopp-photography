@@ -263,9 +263,49 @@
         font-family: 'BoldHead', serif;
       }
     }
-    
+    #lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  flex-direction: column;
+}
+
+#lightbox img {
+  max-width: 90%;
+  max-height: 80%;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+#lightbox.hidden {
+  display: none;
+}
+
+#close-lightbox {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 3rem;
+  color: #F3F4ED;
+  cursor: pointer;
+  user-select: none;
+  z-index: 2100;
+}
+
   </style>
 </head>
+<div id="lightbox" class="hidden">
+  <span id="close-lightbox">&times;</span>
+  <img id="lightbox-img" src="" alt="Large preview">
+</div>
+
 <body>
 
   <section class="hero">
@@ -333,7 +373,21 @@
       });
     }
 
-    
+    document.addEventListener('click', function (e) {
+  if (e.target.tagName === 'IMG' && e.target.closest('.gallery')) {
+    const src = e.target.getAttribute('src');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    lightboxImg.src = src;
+    lightbox.classList.remove('hidden');
+  }
+});
+
+document.getElementById('close-lightbox').addEventListener('click', function () {
+  document.getElementById('lightbox').classList.add('hidden');
+});
+
     function loadPage(page, event) {
       if (event) event.preventDefault();
 

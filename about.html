@@ -1,18 +1,17 @@
 <div class="gallery">
   <div class="thumb">
-    <img src="ghost.jpg" alt="Ghost Shifter" onclick="openLightbox(0)" />
+    <img src="ghost.jpg" alt="Ghost Shifter" onclick="openLightbox('ghost.jpg')" />
     <p class="caption">Ghost Shifter</p>
   </div>
   <div class="thumb">
-    <img src="badge.jpg" alt="badge" onclick="openLightbox(1)" />
-    <p class="caption">badge</p>
+    <img src="badge.jpg" alt="Badge" onclick="openLightbox('badge.jpg')" />
+    <p class="caption">Badge</p>
   </div>
   <div class="thumb">
-    <img src="dalorien.jpg" alt="dalorien" onclick="openLightbox(2)" />
-    <p class="caption">dalorien</p>
+    <img src="dalorien.jpg" alt="Dalorien" onclick="openLightbox('dalorien.jpg')" />
+    <p class="caption">Dalorien</p>
   </div>
 </div>
-
 
 <div id="lightbox" onclick="closeLightbox()">
   <img id="lightbox-img" src="" alt="Full Image" />
@@ -27,15 +26,14 @@
   }
 
   .gallery img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  max-height: 250px; /* optional: restrict thumbnail height */
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    max-height: 250px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
 
   .gallery img:hover {
     transform: scale(1.03);
@@ -63,28 +61,24 @@
   }
 
   #lightbox-img {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 90%;
+    max-height: 90%;
     object-fit: contain;
     border-radius: 4px;
   }
 </style>
 
 <script>
-const images = [
-  {
-    src: 'photo1.jpg',
-    caption: 'Sunset Over Hills'
-  },
-  {
-    src: 'photo2.jpg',
-    caption: 'City Skyline'
-  },
-  {
-    src: 'photo3.jpg',
-    caption: 'Forest Pathway'
+  function openLightbox(imageSrc) {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    lightboxImg.src = imageSrc;
+    lightbox.classList.add('show');
   }
-];
-img.src = images[index].src;
 
+  function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    lightbox.classList.remove('show');
+    document.getElementById('lightbox-img').src = '';
+  }
 </script>

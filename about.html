@@ -1,87 +1,14 @@
 <div class="gallery">
-  <div class="thumb">
-    <img src="ghost.jpg" alt="Ghost Shifter" />
-    <p class="caption">Ghost Shifter</p>
-  </div>
-  <div class="thumb">
-    <img src="badge.jpg" alt="Badge" />
-    <p class="caption">Badge</p>
-  </div>
-  <div class="thumb">
-    <img src="dalorien.jpg" alt="Dalorien" />
-    <p class="caption">Dalorien</p>
-  </div>
+  <h2>About Me</h2>
+  <p>I capture moments where the surreal meets the symbolic.</p>
+
+  <a href="images/ghost.jpg" class="glightbox" data-title="Ghost">
+    <img src="images/ghost.jpg" alt="Ghost">
+  </a>
+  <a href="images/badge.jpg" class="glightbox" data-title="Badge">
+    <img src="images/badge.jpg" alt="Badge">
+  </a>
+  <a href="images/dalorien.jpg" class="glightbox" data-title="Dalorien">
+    <img src="images/dalorien.jpg" alt="Dalorien">
+  </a>
 </div>
-
-<div id="lightbox">
-  <img id="lightbox-img" src="" alt="Full Image" />
-</div>
-
-<style>
-  .gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
-    padding: 20px;
-  }
-
-  .gallery img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    max-height: 250px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-  }
-
-  .gallery img:hover {
-    transform: scale(1.03);
-  }
-
-  #lightbox {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(10, 10, 10, 0.95);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-
-  #lightbox.show {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  #lightbox-img {
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain;
-    border-radius: 4px;
-  }
-</style>
-
-<script>
-  const thumbnails = document.querySelectorAll(".gallery img");
-  const lightbox = document.getElementById("lightbox");
-  const lightboxImg = document.getElementById("lightbox-img");
-
-  thumbnails.forEach(img => {
-    img.addEventListener("click", () => {
-      lightboxImg.src = img.src;
-      lightbox.classList.add("show");
-    });
-  });
-
-  lightbox.addEventListener("click", () => {
-    lightbox.classList.remove("show");
-    lightboxImg.src = "";
-  });
-</script>

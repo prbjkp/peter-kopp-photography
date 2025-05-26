@@ -4,10 +4,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Peter Kopp Photography</title>
-  <link href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" rel="stylesheet" />
   <style>
-    /* ... keep all existing styles unchanged ... */
+    /* --- Existing styles remain unchanged, use your original styles here --- */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #152A17;
+      color: #F3F4ED;
+    }
+    /* All your styles here... */
   </style>
 </head>
 
@@ -15,9 +20,9 @@
   <section class="hero">
     <h1 id="brand-name">Peter Kopp Photography</h1>
     <div id="hero-menu">
-      <a href="#" onclick="loadPage('home.html', event)">Home</a>
-      <a href="#" onclick="loadPage('about.html', event)">Portfolio</a>
-      <a href="#" onclick="loadPage('contact.html', event)">Contact</a>
+      <a href="#home" data-target="home">Home</a>
+      <a href="#portfolio" data-target="portfolio">Portfolio</a>
+      <a href="#contact" data-target="contact">Contact</a>
     </div>
   </section>
 
@@ -30,33 +35,40 @@
         <span></span>
       </button>
       <nav>
-        <a href="#" onclick="loadPage('home.html', event)">Home</a>
-        <a href="#" onclick="loadPage('about.html', event)">Portfolio</a>
-        <a href="#" onclick="loadPage('contact.html', event)">Contact</a>
+        <a href="#home" data-target="home">Home</a>
+        <a href="#portfolio" data-target="portfolio">Portfolio</a>
+        <a href="#contact" data-target="contact">Contact</a>
       </nav>
     </div>
   </header>
 
-  <div id="content"></div>
-  <div class="spacer"></div>
+  <div id="content">
+    <section id="home" class="page-section"> 
+      <h2>Home</h2>
+      <p>Welcome to Peter Kopp Photography. Scroll down to explore more.</p>
+    </section>
+    <section id="portfolio" class="page-section">
+      <h2>Portfolio</h2>
+      <p>Gallery of selected works goes here...</p>
+    </section>
+    <section id="contact" class="page-section">
+      <h2>Contact</h2>
+      <p>Reach out via email or follow on social media.</p>
+    </section>
+  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
   <script>
     const header = document.getElementById('main-header');
-    const content = document.getElementById('content');
     const heroText = document.getElementById('brand-name');
     const heroMenu = document.getElementById('hero-menu');
     const hamburger = document.getElementById('hamburger');
     const nav = document.querySelector('nav');
 
-    const heroTitles = {
-      'home.html': 'Peter Kopp Photography',
-      'about.html': 'Portfolio',
-      'contact.html': 'Contact'
-    };
-
     window.addEventListener('scroll', () => {
-      if (window.scrollY > window.innerHeight * 0.6) {
+      const scrollY = window.scrollY;
+      const vh = window.innerHeight;
+
+      if (scrollY > vh * 0.6) {
         header.classList.add('sticky');
         heroText.style.opacity = '0';
         heroText.style.transform = 'translateY(-50px)';
@@ -67,52 +79,25 @@
         heroText.style.transform = 'translateY(0)';
         heroMenu.style.opacity = '1';
       }
-    });
 
-    function setActiveLink(page) {
+      const sections = document.querySelectorAll('.page-section');
+      let current = '';
+
+      sections.forEach(section => {
+        const top = section.offsetTop;
+        const height = section.offsetHeight;
+        if (scrollY >= top - height / 3) {
+          current = section.getAttribute('id');
+        }
+      });
+
       document.querySelectorAll('nav a').forEach(link => {
         link.classList.remove('active');
-        if (link.getAttribute('onclick')?.includes(page)) {
+        if (link.dataset.target === current) {
           link.classList.add('active');
         }
       });
-    }
-
-    function loadPage(page, event) {
-      if (event) event.preventDefault();
-
-      nav.classList.remove('open');
-      hamburger.classList.remove('open');
-      hamburger.setAttribute('aria-expanded', 'false');
-
-      content.classList.remove('show');
-      heroText.classList.add('fade-out');
-
-      setTimeout(() => {
-        if (heroTitles[page]) {
-          heroText.textContent = heroTitles[page];
-        }
-
-        heroText.classList.remove('fade-out');
-
-        fetch(page)
-          .then(res => {
-            if (!res.ok) throw new Error('Page load error');
-            return res.text();
-          })
-          .then(html => {
-            content.innerHTML = html;
-            content.classList.add('show');
-            setActiveLink(page);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            GLightbox({ selector: '.glightbox' });
-          })
-          .catch(err => {
-            content.innerHTML = `<p style="text-align:center; color:#F88;">Failed to load page.</p>`;
-            content.classList.add('show');
-          });
-      }, 500);
-    }
+    });
 
     hamburger.addEventListener('click', () => {
       const isOpen = hamburger.classList.toggle('open');
@@ -128,9 +113,20 @@
       }
     });
 
-    window.addEventListener("load", () => {
-      loadPage('home.html');
+    document.querySelectorAll('a[data-target]').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const targetId = link.dataset.target;
+        const target = document.getElementById(targetId);
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 50,
+            behavior: 'smooth'
+          });
+        }
+      });
     });
   </script>
 </body>
+
 </html>

@@ -2,104 +2,114 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-<style>
+<<style>
   body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #152A17;
-  color: #F3F4ED;
-}
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #152A17; /* Dark forest green background */
+    color: #F3F4ED; /* Soft cream text */
+  }
 
-.hero {
-  position: relative;
-  height: 100vh;
-  background: url('hero.jpg') center/cover no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+  /* Hero Section */
+  .hero {
+    height: 100vh;
+    background: url('hero.jpg') center center/cover no-repeat;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 120px;
+    position: relative;
+  }
 
-.hero h1 {
-  font-size: 4rem;
-  color: #F3F4ED;
-  transition: all 0.5s ease;
-}
+  .hero h1 {
+    font-size: 3rem;
+    margin: 0;
+    color: #F3F4ED;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+    opacity: 1;
+    transition: all 0.4s ease;
+  }
 
-#main-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 20px 40px;
-  display: flex;
-  justify-content: center;
-  pointer-events: none; /* Disable pointer until elements scroll into view */
-  z-index: 1000;
-}
+  /* Sticky Header */
+  #main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 40px;
+    background-color: rgba(10, 10, 10, 0);
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+    transition: background-color 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+  }
 
-#nav-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 1200px;
-  opacity: 0;
-  transform: translateY(-20px);
-  transition: all 0.4s ease;
-  pointer-events: auto;
-}
+  #main-header.sticky {
+    background-color: rgba(10, 10, 10, 0.85);
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
 
-#sticky-brand {
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: #F3F4ED;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: all 0.4s ease;
-}
+  #nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+  }
 
-header.sticky #sticky-brand {
-  opacity: 1;
-  transform: translateY(0);
-}
+  #sticky-brand {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #F3F4ED;
+    transition: all 0.4s ease;
+  }
 
-nav a {
-  margin: 0 15px;
-  text-decoration: none;
-  color: #A3C99C;
-  font-weight: bold;
-  font-size: 18px;
-  transition: color 0.3s ease;
-  pointer-events: auto;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: all 0.4s ease;
-}
+  nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #A3C99C;
+    font-weight: bold;
+    font-size: 18px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.4s ease;
+  }
 
-header.sticky nav a {
-  opacity: 1;
-  transform: translateY(0);
-}
+  #main-header.sticky nav a {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-#content {
-  padding: 60px 40px;
-  max-width: 800px;
-  margin: auto;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
+  nav a:hover {
+    color: #B07C49;
+  }
 
-#content.show {
-  opacity: 1;
-  transform: translateY(0);
-}
+  #content {
+    padding: 60px 40px;
+    max-width: 800px;
+    margin: auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    color: #F3F4ED;
+  }
 
-.spacer {
-  height: 1500px;
-}
+  #content.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .spacer {
+    height: 1500px;
+  }
 </style>
+
 
 </head>
 <body>
@@ -123,31 +133,29 @@ header.sticky nav a {
 
  <script>
   const header = document.getElementById('main-header');
-  const navContainer = document.getElementById('nav-container');
-  const stickyBrand = document.getElementById('sticky-brand');
+  const heroText = document.getElementById('heroText');
   const content = document.getElementById('content');
-  const heroText = document.getElementById('brand-name');
 
   window.addEventListener('scroll', () => {
     if (window.scrollY > window.innerHeight * 0.6) {
       header.classList.add('sticky');
-      navContainer.style.opacity = '1';
-      navContainer.style.transform = 'translateY(0)';
-      heroText.style.opacity = '0';
-      heroText.style.transform = 'translateY(-50px)';
+      if (heroText) {
+        heroText.style.opacity = '0';
+        heroText.style.transform = 'translateY(-50px)';
+      }
     } else {
       header.classList.remove('sticky');
-      navContainer.style.opacity = '0';
-      navContainer.style.transform = 'translateY(-20px)';
-      heroText.style.opacity = '1';
-      heroText.style.transform = 'translateY(0)';
+      if (heroText) {
+        heroText.style.opacity = '1';
+        heroText.style.transform = 'translateY(0)';
+      }
     }
   });
 
+  // Page fade transition
   function loadPage(page, event) {
     if (event) event.preventDefault();
     content.classList.remove('show');
-
     setTimeout(() => {
       fetch(page)
         .then(res => res.text())
@@ -162,6 +170,7 @@ header.sticky nav a {
     loadPage('home.html');
   });
 </script>
+
 
 
 </body>

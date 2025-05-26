@@ -3,9 +3,6 @@
 
 
 <head>
-    <!-- In <head> -->
-<link href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
@@ -336,25 +333,6 @@
       });
     }
 
-    function loadPage(url) {
-      fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, 'text/html');
-          document.getElementById('content').innerHTML = doc.body.innerHTML;
-
-          // Re-init GLightbox after loading new content
-          GLightbox({ selector: '.glightbox' });
-        })
-        .catch(err => {
-          document.getElementById('content').innerHTML = "<p>Error loading page.</p>";
-          console.error(err);
-        });
-
-      // Close burger menu on click (mobile)
-      document.getElementById('navLinks').classList.remove('active');
-    }
     
     function loadPage(page, event) {
       if (event) event.preventDefault();

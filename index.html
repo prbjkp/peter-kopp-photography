@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <style>
     body {
       margin: 0;
@@ -13,23 +13,47 @@
     .hero {
       position: relative;
       height: 100vh;
-      background: url('hero.jpg') center/cover no-repeat;
       background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('hero.jpg') center/cover no-repeat;
       display: flex;
       justify-content: center;
       align-items: center;
       text-align: center;
+      color: #F3F4ED;
     }
 
     #brand-name {
       font-size: 4rem;
-      color: #F3F4ED;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.5s ease, transform 0.5s ease;
       opacity: 1;
     }
 
     #brand-name.fade-out {
       opacity: 0;
+    }
+
+    /* Hero menu buttons */
+    #hero-menu {
+      position: absolute;
+      bottom: 40px; /* buffer from bottom */
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+      pointer-events: auto;
+      z-index: 10;
+    }
+
+    #hero-menu a {
+      color: #A3C99C;
+      font-weight: bold;
+      font-size: 18px;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    #hero-menu a:hover {
+      color: #F3F4ED;
     }
 
     #main-header {
@@ -40,7 +64,7 @@
       padding: 20px 40px;
       display: flex;
       justify-content: center;
-      pointer-events: none; /* Disable pointer until elements scroll into view */
+      pointer-events: none; /* Disable pointer until visible */
       z-index: 1000;
     }
 
@@ -111,6 +135,12 @@
 
   <section class="hero">
     <h1 id="brand-name">Peter Kopp Photography</h1>
+
+    <div id="hero-menu">
+      <a href="#" onclick="loadPage('home.html', event)">Home</a>
+      <a href="#" onclick="loadPage('about.html', event)">Portfolio</a>
+      <a href="#" onclick="loadPage('contact.html', event)">Contact</a>
+    </div>
   </section>
 
   <header id="main-header">
@@ -133,6 +163,7 @@
     const stickyBrand = document.getElementById('sticky-brand');
     const content = document.getElementById('content');
     const heroText = document.getElementById('brand-name');
+    const heroMenu = document.getElementById('hero-menu');
 
     const heroTitles = {
       'home.html': 'Peter Kopp Photography',
@@ -145,14 +176,22 @@
         header.classList.add('sticky');
         navContainer.style.opacity = '1';
         navContainer.style.transform = 'translateY(0)';
+        stickyBrand.style.opacity = '1';
+        stickyBrand.style.transform = 'translateY(0)';
+
         heroText.style.opacity = '0';
         heroText.style.transform = 'translateY(-50px)';
+        heroMenu.style.opacity = '0';
       } else {
         header.classList.remove('sticky');
         navContainer.style.opacity = '0';
         navContainer.style.transform = 'translateY(-20px)';
+        stickyBrand.style.opacity = '0';
+        stickyBrand.style.transform = 'translateY(-10px)';
+
         heroText.style.opacity = '1';
         heroText.style.transform = 'translateY(0)';
+        heroMenu.style.opacity = '1';
       }
     });
 

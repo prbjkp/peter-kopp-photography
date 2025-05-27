@@ -256,9 +256,26 @@ header.sticky {
       }
 
       #hero-menu {
-        display: none;
-        flex-direction: column;
-      }
+  position: absolute;
+  bottom: 80px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;  /* Default horizontal on desktop */
+  justify-content: center;
+  gap: 40px;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+/* On mobile (small screens), stack hero menu buttons vertically */
+@media (max-width: 768px) {
+  #hero-menu {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
 
       #content {
         padding: 40px 20px;

@@ -467,7 +467,7 @@ document.getElementById('close-lightbox').addEventListener('click', function () 
             window.scrollTo({ top: 0, behavior: 'smooth' });
           })
           .catch(err => {
-            content.innerHTML = <p style="text-align:center; color:#F88;">Failed to load page.</p>;
+            content.innerHTML = `<p style="text-align:center; color:#F88;">Failed to load page.</p>`;
             content.classList.add('show');
           });
       }, 500);
@@ -546,7 +546,7 @@ function loadPage(page, event) {
         observeFadeIns();
       })
       .catch(err => {
-        content.innerHTML = <p style="text-align:center; color:#F88;">Failed to load page.</p>;
+        content.innerHTML = `<p style="text-align:center; color:#F88;">Failed to load page.</p>`;
         content.classList.add('show');
       });
   }, 500);

@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -85,7 +83,12 @@
       pointer-events: auto;
       transition: opacity 0.4s ease, transform 0.4s ease;
     }
-
+header.sticky {
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+              url('hero.jpg') center/cover no-repeat;
+  background-attachment: fixed;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
     #sticky-brand {
       font-size: 1.4rem;
       font-weight: bold;

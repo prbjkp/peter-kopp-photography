@@ -599,16 +599,6 @@ function switchHeader(newIndex) {
     }
   });
 }
-function loadPage(page) {
-  fetch(`${page}.html`)
-    .then(res => res.text())
-    .then(data => {
-      document.getElementById("main-content").innerHTML = data;
-    });
-}
-
-// Default load
-window.onload = () => loadPage("home");
 
 
   </script>

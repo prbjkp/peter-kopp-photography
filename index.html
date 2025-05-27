@@ -12,11 +12,6 @@
       background-color: #152A17;
       color: #F3F4ED;
     }
-    
-img {
-  -webkit-user-drag: none;
-  user-drag: none;
-}
 
     .hero {
       position: relative;
@@ -28,6 +23,18 @@ img {
       text-align: center;
       color: #F3F4ED;
     }
+    .image-container {
+  position: relative;
+  display: inline-block;
+}
+.image-container img {
+  display: block;
+}
+.image-container .overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100
+}
 
     #brand-name {
       font-size: 4rem;

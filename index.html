@@ -174,17 +174,18 @@ header.sticky {
         padding: 15px 20px;
       }
 
-     @media (max-width: 768px) {
+@media (max-width: 768px) {
   nav {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(21, 42, 23, 0.97); /* Dark greenish overlay */
+    background-color: rgba(21, 42, 23, 0.97);
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    display: flex; /* ← MAKE SURE THIS LINE EXISTS */
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.4s ease;
@@ -202,6 +203,8 @@ header.sticky {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
 
   #hamburger {
     display: block;
@@ -291,7 +294,7 @@ header.sticky {
       #brand-name {
         font-family: 'BoldHead', serif;
       }
-    }
+    
     #lightbox {
   position: fixed;
   top: 0;

@@ -418,6 +418,7 @@ header.sticky {
     const heroMenu = document.getElementById('hero-menu');
     const hamburger = document.getElementById('hamburger');
     const nav = document.querySelector('nav');
+    
 
     const heroTitles = {
       'home.html': 'Peter Kopp Photography',
@@ -498,11 +499,13 @@ document.getElementById('close-lightbox').addEventListener('click', function () 
       }, 500);
     }
 
-    hamburger.addEventListener('click', () => {
-      const isOpen = hamburger.classList.toggle('open');
-      nav.classList.toggle('open');
-      hamburger.setAttribute('aria-expanded', isOpen);
-    });
+
+hamburger.addEventListener('click', () => {
+  const isOpen = hamburger.classList.toggle('open');
+  nav.classList.toggle('open');
+  hamburger.setAttribute('aria-expanded', isOpen);
+});
+
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && nav.classList.contains('open')) {

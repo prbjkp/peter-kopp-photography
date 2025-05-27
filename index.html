@@ -345,6 +345,26 @@ header.sticky {
   }
 }
 
+#page-header {
+  position: relative;
+  height: 60px; /* or whatever height you want */
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none; /* prevents interaction when hidden */
+}
+
+.header.active {
+  opacity: 1;
+  pointer-events: auto;
+  position: relative; /* so active header takes space if needed */
+}
 
 
 .gallery img:hover {
@@ -379,9 +399,9 @@ header.sticky {
   <section class="hero">
     <h1 id="brand-name" class="fade-in">Peter Kopp Photography</h1>
     <div id="hero-menu">
-      <a href="#" onclick="loadPage('home.html', event)" class="fade-in">Home</a>
-      <a href="#" onclick="loadPage('about.html', event)" class="fade-in">Portfolio</a>
-      <a href="#" onclick="loadPage('contact.html', event)" class="fade-in">Contact</a>
+      <a href="#" onclick="loadPage('home.html', event)" class="fade-in" class="page-header">Home</a>
+      <a href="#" onclick="loadPage('about.html', event)" class="fade-in" class="page-header">Portfolio</a>
+      <a href="#" onclick="loadPage('contact.html', event)" class="fade-in" class="page-header">Contact</a>
     </div>
   </section>
 
@@ -569,6 +589,17 @@ function loadPage(page, event) {
       });
   }, 500);
 }
+function switchHeader(newIndex) {
+  const headers = document.querySelectorAll('#page-header .header');
+  headers.forEach((header, i) => {
+    if (i === newIndex) {
+      header.classList.add('active');
+    } else {
+      header.classList.remove('active');
+    }
+  });
+}
+
 
   </script>
 

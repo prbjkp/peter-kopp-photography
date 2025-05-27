@@ -20,12 +20,14 @@
       align-items: center;
       text-align: center;
       color: #F3F4ED;
+      flex-direction: column; /* added for stacking */
     }
 
     #brand-name {
       font-size: 4rem;
       transition: opacity 0.5s ease, transform 0.5s ease;
       opacity: 1;
+      margin: 0;
     }
 
     #brand-name.fade-out {
@@ -54,6 +56,50 @@
     }
     #hero-menu a:hover {
       color: #F3F4ED;
+    }
+
+    /* Added hamburger inside hero */
+    #hamburger {
+      display: none; /* default hidden, will show on mobile */
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 30px;
+      height: 25px;
+      position: absolute;
+      bottom: 12px; /* position near bottom of hero */
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1100;
+    }
+    #hamburger span {
+      position: absolute;
+      height: 3px;
+      width: 100%;
+      background: #A3C99C;
+      left: 0;
+      transition: all 0.3s ease;
+      border-radius: 2px;
+    }
+    #hamburger span:nth-child(1) {
+      top: 0;
+    }
+    #hamburger span:nth-child(2) {
+      top: 11px;
+    }
+    #hamburger span:nth-child(3) {
+      bottom: 0;
+    }
+    #hamburger.open span:nth-child(1) {
+      transform: rotate(45deg);
+      top: 11px;
+    }
+    #hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+    #hamburger.open span:nth-child(3) {
+      transform: rotate(-45deg);
+      bottom: 11px;
     }
 
     #main-header {
@@ -174,52 +220,12 @@ header.sticky {
         padding: 15px 20px;
       }
 
+      /* Show hamburger inside hero instead of nav */
       #hamburger {
         display: block;
-        background: none;
-        border: none;
-        cursor: pointer;
-        width: 30px;
-        height: 25px;
-        position: absolute;
-        bottom: 12px;
-        left: 90%;
-        transform: translateX(-50%);
-        z-index: 1100;
       }
 
-      #hamburger span {
-        position: absolute;
-        height: 3px;
-        width: 100%;
-        background: #A3C99C;
-        left: 0;
-        transition: all 0.3s ease;
-        border-radius: 2px;
-      }
-
-      #hamburger span:nth-child(1) {
-        top: 0;
-      }
-      #hamburger span:nth-child(2) {
-        top: 11px;
-      }
-      #hamburger span:nth-child(3) {
-        bottom: 0;
-      }
-
-      #hamburger.open span:nth-child(1) {
-        transform: rotate(45deg);
-        top: 11px;
-      }
-      #hamburger.open span:nth-child(2) {
-        opacity: 0;
-      }
-      #hamburger.open span:nth-child(3) {
-        transform: rotate(-45deg);
-        bottom: 11px;
-      }
-
+      /* Hide desktop nav menu */
       nav {
         position: fixed;
         top: 60px;
@@ -312,247 +318,101 @@ header.sticky {
 }
 
 .gallery img {
-  flex: 1 0 calc(20% - 10px); /* 5 across */
-  max-width: calc(20% - 10px);
-  height: auto;
-  border-radius: 8px;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  flex: 1 0 calc(33% - 20px);
+  max-width: calc(33% - 20px);
   cursor: pointer;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.gallery img:hover {
+  transform: scale(1.05);
 }
 
 @media (max-width: 768px) {
   .gallery img {
-    flex: 1 0 100%;
-    max-width: 100%;
+    flex: 1 0 calc(50% - 20px);
+    max-width: calc(50% - 20px);
   }
 }
 
-
-
-.gallery img:hover {
-  transform: scale(1.03);
-}
-
-/* Mobile: stack vertically */
-
-
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-
-
   </style>
+  <title>Peter Kopp Photography</title>
 </head>
-<div id="lightbox" class="hidden">
-  <span id="close-lightbox">&times;</span>
-  <img id="lightbox-img" src="" alt="Large preview">
-</div>
-
 <body>
-
-  <section class="hero">
-    <h1 id="brand-name" class="fade-in">Peter Kopp Photography</h1>
-    <div id="hero-menu">
-      <a href="#" onclick="loadPage('home.html', event)" class="fade-in">Home</a>
-      <a href="#" onclick="loadPage('about.html', event)" class="fade-in">Portfolio</a>
-      <a href="#" onclick="loadPage('contact.html', event)" class="fade-in">Contact</a>
-    </div>
-  </section>
-
   <header id="main-header">
     <div id="nav-container">
-      <div id="sticky-brand" class="fade-in">Peter Kopp Photography</div>
-      <button id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <nav>
-        <a href="#" onclick="loadPage('home.html', event)">Home</a>
-        <a href="#" onclick="loadPage('about.html', event)">Portfolio</a>
-        <a href="#" onclick="loadPage('contact.html', event)">Contact</a>
+      <div id="sticky-brand">Peter Kopp Photography</div>
+      <nav id="nav-links" aria-label="Primary Navigation">
+        <a href="#home" class="active">Home</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#contact">Contact</a>
       </nav>
     </div>
   </header>
 
-  <div id="content"></div>
-  <div class="spacer"></div>
+  <section class="hero" id="hero">
+    <h1 id="brand-name">Peter Kopp Photography</h1>
+    
+    <div id="hero-menu" aria-label="Hero Menu">
+      <a href="#home">Home</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <button id="hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-links">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </section>
+
+  <main id="content">
+    <p>Welcome to Peter Kopp Photography. Explore my latest works and get in touch.</p>
+    <div class="spacer"></div>
+  </main>
 
   <script>
     const header = document.getElementById('main-header');
-    const content = document.getElementById('content');
-    const heroText = document.getElementById('brand-name');
+    const navContainer = document.getElementById('nav-container');
+    const stickyBrand = document.getElementById('sticky-brand');
+    const navLinks = document.getElementById('nav-links');
+    const brandName = document.getElementById('brand-name');
     const heroMenu = document.getElementById('hero-menu');
     const hamburger = document.getElementById('hamburger');
-    const nav = document.querySelector('nav');
-
-    const heroTitles = {
-      'home.html': 'Peter Kopp Photography',
-      'about.html': 'Portfolio',
-      'contact.html': 'Contact'
-    };
 
     window.addEventListener('scroll', () => {
-      if (window.scrollY > window.innerHeight * 0.6) {
+      if(window.scrollY > 20) {
         header.classList.add('sticky');
-        heroText.style.opacity = '0';
-        heroText.style.transform = 'translateY(-50px)';
-        heroMenu.style.opacity = '0';
+        // Hide hero menu and brand name
+        heroMenu.style.opacity = 0;
+        heroMenu.style.pointerEvents = 'none';
+        brandName.classList.add('fade-out');
       } else {
         header.classList.remove('sticky');
-        heroText.style.opacity = '1';
-        heroText.style.transform = 'translateY(0)';
-        heroMenu.style.opacity = '1';
+        heroMenu.style.opacity = 1;
+        heroMenu.style.pointerEvents = 'auto';
+        brandName.classList.remove('fade-out');
       }
     });
-
-    function setActiveLink(page) {
-      document.querySelectorAll('nav a').forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('onclick')?.includes(page)) {
-          link.classList.add('active');
-        }
-      });
-    }
-
-    document.addEventListener('click', function (e) {
-  if (e.target.tagName === 'IMG' && e.target.closest('.gallery')) {
-    const src = e.target.getAttribute('src');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-
-    lightboxImg.src = src;
-    lightbox.classList.remove('hidden');
-  }
-});
-
-document.getElementById('close-lightbox').addEventListener('click', function () {
-  document.getElementById('lightbox').classList.add('hidden');
-});
-
-    function loadPage(page, event) {
-      if (event) event.preventDefault();
-
-      nav.classList.remove('open');
-      hamburger.classList.remove('open');
-      hamburger.setAttribute('aria-expanded', 'false');
-
-      content.classList.remove('show');
-      heroText.classList.add('fade-out');
-
-      setTimeout(() => {
-        if (heroTitles[page]) {
-          heroText.textContent = heroTitles[page];
-        }
-
-        heroText.classList.remove('fade-out');
-
-        fetch(page)
-          .then(res => {
-            if (!res.ok) throw new Error('Page load error');
-            return res.text();
-          })
-          .then(html => {
-            content.innerHTML = html;
-            content.classList.add('show');
-            setActiveLink(page);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          })
-          .catch(err => {
-            content.innerHTML = `<p style="text-align:center; color:#F88;">Failed to load page.</p>`;
-            content.classList.add('show');
-          });
-      }, 500);
-    }
 
     hamburger.addEventListener('click', () => {
-      const isOpen = hamburger.classList.toggle('open');
-      nav.classList.toggle('open');
-      hamburger.setAttribute('aria-expanded', isOpen);
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+      hamburger.setAttribute('aria-expanded', !expanded);
+      hamburger.classList.toggle('open');
+      navLinks.classList.toggle('open');
     });
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && nav.classList.contains('open')) {
-        nav.classList.remove('open');
-        hamburger.classList.remove('open');
-        hamburger.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    window.addEventListener("load", () => {
-      loadPage('home.html');
-    });
-    const observer = new IntersectionObserver((entries, obs) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      obs.unobserve(entry.target); // Optional: stop observing after animation
-    }
-  });
-}, {
-  threshold: 0.1
-});
-
-function observeFadeIns() {
-  document.querySelectorAll('.fade-in').forEach(el => {
-    observer.observe(el);
-  });
-}
-
-// Call it on initial load
-window.addEventListener("load", () => {
-  loadPage('home.html');
-  observeFadeIns();
-});
-
-// Re-call it every time new content is loaded dynamically
-function loadPage(page, event) {
-  if (event) event.preventDefault();
-
-  nav.classList.remove('open');
-  hamburger.classList.remove('open');
-  hamburger.setAttribute('aria-expanded', 'false');
-
-  content.classList.remove('show');
-  heroText.classList.add('fade-out');
-
-  setTimeout(() => {
-    if (heroTitles[page]) {
-      heroText.textContent = heroTitles[page];
-    }
-
-    heroText.classList.remove('fade-out');
-
-    fetch(page)
-      .then(res => {
-        if (!res.ok) throw new Error('Page load error');
-        return res.text();
-      })
-      .then(html => {
-        content.innerHTML = html;
-        content.classList.add('show');
-        setActiveLink(page);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-
-        // Observe new fade-ins after loading
-        observeFadeIns();
-      })
-      .catch(err => {
-        content.innerHTML = `<p style="text-align:center; color:#F88;">Failed to load page.</p>`;
-        content.classList.add('show');
+    // Close menu when clicking a nav link on mobile
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (navLinks.classList.contains('open')) {
+          navLinks.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', false);
+        }
       });
-  }, 500);
-}
-
+    });
   </script>
-
 </body>
 </html>

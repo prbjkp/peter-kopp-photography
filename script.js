@@ -12,9 +12,3 @@ function loadPage(page) {
       }, 150); // match your CSS transition time if needed
     });
 }
-
-function observeFadeIns() {
-  document.querySelectorAll('.fade-in, .slide-up').forEach(el => {
-    observer.observe(el);
-  });
-}

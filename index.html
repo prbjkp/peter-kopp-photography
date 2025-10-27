@@ -701,6 +701,19 @@ var form = document.getElementById("my-form");
   }
   form.addEventListener("submit", handleSubmit)
 
+
+document.querySelectorAll('.gallery img').forEach(photo => {
+  photo.addEventListener('click', () => {
+    const lightbox = document.querySelector('.lightbox');
+    lightbox.querySelector('img').src = photo.src;
+    lightbox.classList.add('active');
+  });
+});
+
+document.querySelector('.lightbox').addEventListener('click', () => {
+  document.querySelector('.lightbox').classList.remove('active');
+});
+
   </script>
 
 </body>

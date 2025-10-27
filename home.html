@@ -51,4 +51,18 @@
   border-radius: 8px;
 }
 
+.lightbox {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+}
+
+/* Visible state */
+.lightbox.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
 </style>
